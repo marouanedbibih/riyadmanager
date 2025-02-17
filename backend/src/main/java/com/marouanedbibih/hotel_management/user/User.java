@@ -7,52 +7,41 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.marouanedbibih.hotel_management.guest.Guest;
 import com.marouanedbibih.hotel_management.utils.BasicEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/*
+ * The username is the email
+ */
 @Entity
 @Table(name = "users")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BasicEntity implements UserDetails {
 
-    // Auth fields
-    @Column(unique = true)
-    private String username;
-    private String password;
-    // User fields
-    private String lastName;
-    private String firstName;
-    private String image;
-    // Contact fields
     @Column(unique = true)
     private String email;
-    @Column(length = 10)
-    private String phone;
-    // Role
+    private String password;
+    private String lastName;
+    private String firstName;
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    // Guest
-    @OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-    private Guest guest;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -66,12 +55,8 @@ public class User extends BasicEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
-
-    /**
-     * This methodes are for account management
-     */
 
     @Override
     public boolean isAccountNonExpired() {

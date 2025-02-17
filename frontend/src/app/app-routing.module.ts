@@ -10,6 +10,11 @@ const routes: Routes = [
     component: LoginComponent,
   },
   { path: 'register', component: RegisterComponent },
+  {
+    path: 'guests',
+    loadChildren: () =>
+      import('./modules/guest/guest.module').then((m) => m.GuestModule),
+  },
 ];
 
 @NgModule({

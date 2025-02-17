@@ -1,0 +1,23 @@
+<div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let guest of guests; let i = index">
+        <th>{{ i + 1 }}</th>
+        <td>{{ guest.firstName }}</td>
+        <td>{{ guest.lastName }}</td>
+        <td>{{ guest.username }}</td>
+        <td>{{ guest.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

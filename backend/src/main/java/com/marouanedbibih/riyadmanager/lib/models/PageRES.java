@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PageRES <D> {
+public class PageRES<D> {
     private List<D> content;
     private int currentPage;
     private int size;

@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: riyadmanager-backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://riyadmanager-mysql:3306/riyadmanager_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      CORS_ALLOWED_ORIGINS: http://localhost:4200
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - riyadmanager-network
+    

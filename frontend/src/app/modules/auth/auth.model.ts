@@ -11,7 +11,7 @@ export interface IUser {
   username: string;
   lastName: string;
   firstName: string;
-  role: UserRole;
+  role: UserRole | null;
 }
 
 export enum UserRole {

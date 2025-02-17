@@ -4,6 +4,7 @@ import { IAuthRES, ILoginREQ, IUser } from './auth.model';
 import { Observable } from 'rxjs';
 import { env } from '../../../env/env';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
   login(req: ILoginREQ): Observable<IAuthRES> {
     return this.http.post<IAuthRES>(`${env.api}/api/login`, req);
@@ -32,13 +33,15 @@ export class AuthService {
 
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
+    console.log(token);
     return token
       ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
       : new HttpHeaders();
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   getUserFromToken(): IUser | null {

@@ -1,32 +1,32 @@
 spring:
-    application:
-        name: ${APP_NAME}
-    datasource:
-        url: jdbc:mysql://localhost:3306/${DB_NAME}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
-        username: ${DB_USER}
-        password: ${DB_PASS}
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: riyadmanager
+  datasource:
+    url: jdbc:mysql://localhost:3306/riyadmanager_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQLDialect
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 server:
-    port: ${PORT}
+  port: 8080
 
 logging:
-    level:
-        org:
-            hibernate:
-                SQL: DEBUG
-                type: trace # This logs SQL statements and their parameters
-            springframework:
-                web: DEBUG
-                security: DEBUG
-                data: DEBUG
-        com:
-            marouanedbibih: Debug
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: trace 
+      springframework:
+        web: DEBUG
+        security: DEBUG
+        data: DEBUG
+    com:
+      marouanedbibih: Debug

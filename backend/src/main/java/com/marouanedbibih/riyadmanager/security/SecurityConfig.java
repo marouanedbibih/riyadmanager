@@ -1,107 +1,82 @@
 package com.marouanedbibih.riyadmanager.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
+
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private static final String ADMIN = "ADMIN";
+    private static final String MANAGER = "MANAGER";
+    
     private final CustomUserDetailsService customUserDetailsService;
-
-    @Autowired
-    private JwtFilter jwtFilter;
-
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
-
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtFilter jwtFilter) {
-        this.customUserDetailsService = customUserDetailsService;
-        this.jwtFilter = jwtFilter;
-    }
+    private final JwtFilter jwtFilter;
+    private final AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Disable CSRF
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
-        // Authorize requests based on the URL and the role of the user
-        http.authorizeHttpRequests(request -> {
-            // ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)
-            // request.anyRequest()).authenticated();
-            request
-                    .requestMatchers(HttpMethod.GET, "/api/booking/available-rooms/").permitAll()
 
-                    // All other requests require authentication
-                    .anyRequest().authenticated();
-        });
-        // Set the session management to stateless
+        http.authorizeHttpRequests(request -> request
+                // Public endpoints
+                .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // Guests management endpoints - accessible only by ADMIN & MANAGER
+                .requestMatchers(HttpMethod.POST, "/api/guests").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.PUT, "/api/guests/{id}").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.GET, "/api/guests/{id}").hasAnyAuthority(ADMIN,MANAGER)
+                .requestMatchers(HttpMethod.GET, "/api/guests").hasAnyAuthority(ADMIN,MANAGER)
+                .requestMatchers(HttpMethod.DELETE, "/api/guests/{id}").hasAnyAuthority(ADMIN,MANAGER)
+                .requestMatchers(HttpMethod.GET, "/api/guests/list").hasAnyAuthority(ADMIN,MANAGER)
+
+                .anyRequest().authenticated());
+
         http.sessionManagement(
                 sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // Set the authentication provider
-        http.authenticationProvider(authenticationProvider());
-
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
 
-        // Add the JWT filter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // http.httpBasic(Customizer.withDefaults());
-        return (SecurityFilterChain) http.build();
+        return http.build();
     }
 
-    // Password encoder bean
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Authentication provider bean
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // Define the DaoAuthenticationProvider
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-
-        // Set the custom user details service
-        provider.setUserDetailsService(customUserDetailsService);
-        // Set the password encoder
-        provider.setPasswordEncoder(passwordEncoder());
-
-        // Return the provider
-        return provider;
+        return new CustomAuthProvider(customUserDetailsService, passwordEncoder());
     }
 
-    // Configure the AuthenticationManager Bean
-    // @Bean
-    // public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    // auth.authenticationProvider(authenticationProvider());
-    // }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 }
+

@@ -23,9 +23,9 @@ public class GuestService implements
         ICRUD<Guest, GuestDTO, GuestREQ, GuestREQ, Long>,
         IFetch<GuestDTO> {
 
-    private GuestRepository guestRepository;
+    private final GuestRepository guestRepository;
 
-    private GuestMapper guestMapper;
+    private final GuestMapper guestMapper;
 
     @Override
     @Transactional

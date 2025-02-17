@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.marouanedbibih.riyadmanager.lib.interfaces.IRESTController;
@@ -23,6 +24,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
 
     @Override
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<GuestDTO> fetchById(@PathVariable Long id) {
         GuestDTO guestDTO = guestService.get(id);
         return ResponseEntity.ok(guestDTO);
@@ -30,6 +32,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
 
     @Override
     @GetMapping("/list")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<List<GuestDTO>> fetchAll() {
         List<GuestDTO> guests = guestService.list();
         return ResponseEntity.ok(guests);
@@ -37,6 +40,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
 
     @Override
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<GuestDTO> create(@RequestBody GuestREQ req) {
         GuestDTO guestDTO = guestService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(guestDTO);
@@ -44,6 +48,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
 
     @Override
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<GuestDTO> update(@RequestBody GuestREQ req, @PathVariable Long id) {
         GuestDTO guestDTO = guestService.update(id, req);
         return ResponseEntity.ok(guestDTO);
@@ -51,6 +56,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
 
     @Override
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         guestService.delete(id);
         return ResponseEntity.noContent().build();
@@ -58,6 +64,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
 
     @Override
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<PageRES<GuestDTO>> fetchAll(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,

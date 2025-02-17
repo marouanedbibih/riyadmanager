@@ -1,4 +1,4 @@
-package com.marouanedbibih.riyadmanager.jwt;
+package com.marouanedbibih.riyadmanager.security.jwt;
 
 import java.util.HashMap;
 
@@ -20,13 +20,12 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtils {
-        private static final String SECRET_KEY = "QAR1At+Vv3rNXrmiHGcZ0tG3+EPgdkeVi/HqjgcUbf8WcgdgpCXDTjb7CnIv9WEL";
+    private static final String SECRET_KEY = "QAR1At+Vv3rNXrmiHGcZ0tG3+EPgdkeVi/HqjgcUbf8WcgdgpCXDTjb7CnIv9WEL";
 
     // Extract username from token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
-
 
     // Extract role from token
     public String extractRole(String token) {
@@ -35,9 +34,8 @@ public class JwtUtils {
 
     // Create token with extra claims
     public String createToken(UserDTO user) {
-
         Map<String, Object> extracClaims = new HashMap<>();
-        extracClaims.put("role", user.getRole().toString());
+        extracClaims.put("user", user);
         return Jwts
                 .builder()
                 .setClaims(extracClaims)

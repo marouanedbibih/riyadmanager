@@ -19,6 +19,9 @@ public class GuestMapper implements IMapper<Guest, GuestDTO, GuestREQ, GuestREQ>
             return null;
         }
         return GuestDTO.builder()
+                .id(entity.getId())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
                 .lastName(entity.getLastName())
                 .firstName(entity.getFirstName())
                 .username(entity.getUsername())
@@ -33,7 +36,7 @@ public class GuestMapper implements IMapper<Guest, GuestDTO, GuestREQ, GuestREQ>
             return null;
         }
 
-        Guest guest = Guest.builder()
+        Guest guest = Guest.builder()                
                 .lastName(createRequest.lastName())
                 .firstName(createRequest.firstName())
                 .username(createRequest.username())
@@ -75,6 +78,7 @@ public class GuestMapper implements IMapper<Guest, GuestDTO, GuestREQ, GuestREQ>
      */
     public GuestDTO toSelectGuest(Guest guest) {
         return GuestDTO.builder()
+                .id(guest.getId())
                 .lastName(guest.getLastName())
                 .firstName(guest.getFirstName())
                 .email(guest.getEmail())

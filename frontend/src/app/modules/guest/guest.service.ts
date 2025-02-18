@@ -25,7 +25,7 @@ export class GuestService {
   fetchAllGuests(params: IFetchParams): Observable<IPageRES<IGuest>> {
     let httpParams = new HttpParams()
       .set('page', params.page?.toString() || '1')
-      .set('size', params.size?.toString() || '10')
+      .set('size', params.size?.toString() || '5')
       .set('sortBy', params.sortBy || 'id')
       .set('orderBy', params.orderBy || 'desc');
 

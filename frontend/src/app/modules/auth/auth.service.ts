@@ -23,8 +23,14 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    try {
+      return localStorage.getItem('token');
+    } catch (error) {
+      console.error("Error accessing localStorage", error);
+      return null;
+    }
   }
+
 
   isTokenExpired(): boolean {
     const token = this.getToken();

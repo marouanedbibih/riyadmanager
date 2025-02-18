@@ -1,0 +1,121 @@
+<!-- You can open the modal using ID.showModal() method -->
+<dialog id="guest_form_modal" class="modal">
+  <div class="modal-box">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <form (ngSubmit)="onSubmit()" class="">
+
+      <div class="py-4 flex flex-col gap-2 p-4">
+        <h3 class="text-lg font-bold">Add Guest</h3>
+
+        <!-- First Name Input -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">First Name</span>
+          </div>
+          <input
+            type="text"
+            placeholder="First Name"
+            class="input input-bordered w-full"
+            [(ngModel)]="request.firstName"
+            name="firstName"
+            required
+            minlength="2"
+            maxlength="50"
+          />
+          <div class="label">
+            <span class="label-text-alt">First name must be between 2 and 50 characters</span>
+          </div>
+        </label>
+
+        <!-- Last Name Input -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Last Name</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Last Name"
+            class="input input-bordered w-full"
+            [(ngModel)]="request.lastName"
+            name="lastName"
+            required
+            minlength="2"
+            maxlength="50"
+          />
+          <div class="label">
+            <span class="label-text-alt">Last name must be between 2 and 50 characters</span>
+          </div>
+        </label>
+
+        <!-- Username Input -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Username</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Username"
+            class="input input-bordered w-full"
+            [(ngModel)]="request.username"
+            name="username"
+            required
+            minlength="4"
+            maxlength="30"
+          />
+          <div class="label">
+            <span class="label-text-alt">Username must be between 4 and 30 characters</span>
+          </div>
+        </label>
+
+        <!-- Email Input -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Email</span>
+          </div>
+          <input
+            type="email"
+            placeholder="Email"
+            class="input input-bordered w-full"
+            [(ngModel)]="request.email"
+            name="email"
+            required
+            email
+          />
+          <div class="label">
+            <span class="label-text-alt">Invalid email format</span>
+          </div>
+        </label>
+
+        <!-- Phone Input -->
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Phone</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Phone"
+            class="input input-bordered w-full"
+            [(ngModel)]="request.phone"
+            name="phone"
+            required
+            pattern="^\\+?[0-9]{10,15}$"
+          />
+          <div class="label">
+            <span class="label-text-alt">Invalid phone number format</span>
+          </div>
+        </label>
+
+        <!-- Submit Button -->
+        <button
+        type="submit"
+        class="bg-blue-950 text-white p-2 rounded-md transition hover:bg-blue-950 flex items-center justify-center"
+      >
+        <span *ngIf="formLoading.button" class="loading loading-spinner mr-2"></span>
+        {{ formLoading.button ? 'Loading' : 'Submit' }}
+      </button>
+      </div>
+    </form>
+  </div>
+</dialog>

@@ -1,3 +1,4 @@
+import { SharedModule } from './modules/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,11 +16,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    // JwtModule.forRoot({
-    //   config: {
-    //     tokenGetter: () => localStorage.getItem('token'),
-    //   },
-    // }),
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,23 @@
+<div class="join bg-white rounded-lg shadow overflow-y-auto relative">
+  <button
+    class="join-item btn bg-blue-950 text-white hover:bg-blue-950 active:bg-blue-950"
+    [disabled]="currentPage === 1"
+    (click)="changePage(currentPage - 1)">
+    «
+  </button>
+
+  <button
+    *ngFor="let page of getPageNumbers()"
+    class="join-item btn  "
+    [ngClass]="{'btn-active': page === currentPage}"
+    (click)="changePage(page)">
+    {{ page }}
+  </button>
+
+  <button
+    class="join-item btn bg-blue-950 text-white hover:bg-blue-950 active:bg-blue-950 "
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(currentPage + 1)">
+    »
+  </button>
+</div>

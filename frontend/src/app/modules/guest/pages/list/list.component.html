@@ -1,4 +1,24 @@
-<div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
+<div
+  class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
+>
+  <div class="bg-white p-4 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Guests List</h1>
+    </div>
+    <div class="flex items-center justify-end gap-2">
+      <label class="input input-bordered flex items-center gap-2">
+        <input type="text" class="grow" placeholder="Search" />
+        <kbd class="kbd kbd-sm">⌘</kbd>
+        <kbd class="kbd kbd-sm">K</kbd>
+      </label>
+      <button
+        class="btn btn-active bg-blue-950 text-white hover:bg-blue-950 active:bg-blue-950"
+        onclick="guest_form_modal.showModal()"
+      >
+        Add Guest
+      </button>
+    </div>
+  </div>
   <table class="table">
     <!-- head -->
     <thead>
@@ -8,16 +28,46 @@
         <th>Last Name</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="isLoading">
+        <td colspan="6" class="text-center">
+          <span class="loading loading-spinner loading-md"></span>
+        </td>
+      </tr>
       <tr *ngFor="let guest of guests; let i = index">
         <th>{{ i + 1 }}</th>
         <td>{{ guest.firstName }}</td>
         <td>{{ guest.lastName }}</td>
         <td>{{ guest.username }}</td>
         <td>{{ guest.email }}</td>
+        <td>
+          <div class="flex items-center space-x-4">
+            <button
+              class="btn btn-active bg-blue-950 text-white hover:bg-blue-950 active:bg-blue-950"
+            >
+              View
+            </button>
+            <button class="btn btn-active btn-accent">Edit</button>
+            <button class="btn btn-error">Delete</button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="!isLoading && guests.length === 0">
+        <td colspan="6" class="text-center">No guests found.</td>
       </tr>
     </tbody>
   </table>
+</div>
+<div class="w-full flex justify-center items-start mt-8">
+  <app-pagination
+    [totalPages]="totalPages"
+    [currentPage]="fetchParams.page"
+    (pageChange)="onPageChange($event)"
+  >
+  </app-pagination>
+
+  <app-form> </app-form>
 </div>

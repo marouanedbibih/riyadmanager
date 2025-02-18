@@ -12,4 +12,5 @@ export interface IGuestREQ {
   username: string;
   firstName: string;
   lastName: string;
+  phone: string;
 }

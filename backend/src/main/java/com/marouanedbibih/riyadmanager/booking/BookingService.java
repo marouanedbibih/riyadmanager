@@ -3,80 +3,57 @@ package com.marouanedbibih.riyadmanager.booking;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.marouanedbibih.riyadmanager.errors.BusinessException;
 import com.marouanedbibih.riyadmanager.reservation.ReservationRepository;
-import com.marouanedbibih.riyadmanager.room.Room;
 import com.marouanedbibih.riyadmanager.room.RoomDTO;
 import com.marouanedbibih.riyadmanager.room.RoomRepository;
-import com.marouanedbibih.riyadmanager.room.RoomService;
-import com.marouanedbibih.riyadmanager.roomCategory.RoomCategory;
-import com.marouanedbibih.riyadmanager.roomCategory.RoomCategoryRepository;
-import com.marouanedbibih.riyadmanager.utils.BasicException;
-import com.marouanedbibih.riyadmanager.utils.BasicResponse;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class BookingService {
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+        private final RoomRepository roomRepository;
+        private final ReservationRepository reservationRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
-    private RoomCategoryRepository roomCategoryRepository;
-
-    @Autowired
-    private RoomService roomService;
-
-    public BasicResponse checkAvailableRooms(BookingRequest request) throws BasicException {
-        // Check if the requested room category exists
-        RoomCategory roomCategory = roomCategoryRepository
-                .findById(request.getRoomCategoryId())
-                .orElseThrow(() -> {
-                    BasicResponse response = BasicResponse.builder()
-                            .message("Room category not found")
-                            .build();
-                    return new BasicException(response);
-                });
-
-        // Select all rooms that belong to the requested category
-        List<Room> rooms = roomRepository.findByRoomCategory(roomCategory);
-        // Throw an exception if no rooms are found
-        if (rooms.isEmpty()) {
-            BasicResponse response = BasicResponse.builder()
-                    .message("No rooms found for the requested category")
-                    .build();
-            throw new BasicException(response);
+        /**
+         * Checks for available rooms based on the specified booking request.
+         * 
+         * This method filters rooms by the specified room type and checks their
+         * availability
+         * for the given date range. If no rooms are available, it throws a
+         * BusinessException.
+         * 
+         * @param request The booking request containing the room type and date range.
+         * @return A list of available rooms as RoomDTO objects.
+         * @throws BusinessException if no rooms are available for the specified date
+         *                           range.
+         */
+        public List<RoomDTO> checkAvailableRooms(BookingRequest request) {
+                return roomRepository.findByRoomType(request.getType()).stream()
+                                .filter(room -> reservationRepository
+                                                .existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
+                                                                room.getId(),
+                                                                request.getCheckInLocalDate(),
+                                                                request.getCheckOutLocalDate()))
+                                .map(room -> RoomDTO.builder()
+                                                .id(room.getId())
+                                                .number(room.getNumber())
+                                                .status(room.getStatus())
+                                                .roomCategoryTitle(room.getType().toString())
+                                                .build())
+                                .collect(Collectors.collectingAndThen(
+                                                Collectors.toList(),
+                                                list -> {
+                                                        if (list.isEmpty()) {
+                                                                throw new BusinessException("No rooms available",
+                                                                                HttpStatus.BAD_REQUEST);
+                                                        }
+                                                        return list;
+                                                }));
         }
-        // Filter out rooms that are already reserved during the specified period
-        List<Room> availableRooms = rooms.stream()
-                .filter(room -> roomService.isRoomAvailable(room.getId(), request.getCheckInLocalDate(),
-                        request.getCheckOutLocalDate()))
-                .collect(Collectors.toList());
-
-        // Throw an exception if no rooms are available
-        if (availableRooms.isEmpty()) { 
-            BasicResponse response = BasicResponse.builder()
-                    .message("No rooms available for the requested dates")
-                    .build();
-            throw new BasicException(response);
-        }
-        // Buil The Room DTO list
-        List<RoomDTO> roomDTOs = availableRooms.stream()
-                .map(room -> RoomDTO.builder()
-                        .id(room.getId())
-                        .number(room.getNumber())
-                        .status(room.getStatus())
-                        .roomCategoryTitle(room.getRoomCategory().getTitle())
-                        .build())
-                .collect(Collectors.toList());
-        // Return the list of available rooms
-        return BasicResponse.builder()
-                .message("Rooms available")
-                .content(roomDTOs)
-                .build();
-    }
 }

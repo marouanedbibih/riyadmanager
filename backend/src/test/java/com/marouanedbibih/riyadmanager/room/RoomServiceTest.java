@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.marouanedbibih.riyadmanager.reservation.ReservationRepository;
-import com.marouanedbibih.riyadmanager.room.RoomService;
 
 public class RoomServiceTest {
 

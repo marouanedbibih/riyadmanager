@@ -2,7 +2,6 @@ package com.marouanedbibih.riyadmanager.room;
 
 import java.time.LocalDateTime;
 
-import com.marouanedbibih.riyadmanager.utils.BasicDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

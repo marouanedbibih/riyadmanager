@@ -14,11 +14,9 @@ public class RoomService {
     private ReservationRepository reservationRepository;
 
     public boolean isRoomAvailable(Long roomId, LocalDate checkInDate, LocalDate checkOutDate) {
-    // This method checks if there is any existing reservation that overlaps with the given dates
     boolean isReserved = reservationRepository.existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
             roomId, checkOutDate, checkInDate);
 
-    // If the method returns false, the room is available for the given dates
     return !isReserved;
 }
 

@@ -1,19 +1,17 @@
 package com.marouanedbibih.riyadmanager.booking;
 
 import java.sql.Date;
+import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marouanedbibih.riyadmanager.utils.BasicException;
-import com.marouanedbibih.riyadmanager.utils.BasicResponse;
+import com.marouanedbibih.riyadmanager.room.RoomDTO;
+import com.marouanedbibih.riyadmanager.room.RoomType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,24 +24,17 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/available-rooms/")
-    public ResponseEntity<BasicResponse> getAvailableRooms(
+    public ResponseEntity<List<RoomDTO>> getAvailableRooms(
             @RequestParam Date checkIn,
             @RequestParam Date checkOut,
-            @RequestParam Long roomCategoryId) {
-        // Build the request
-        BookingRequest request = BookingRequest.builder()
-                .checkIn(checkIn)
-                .checkOut(checkOut)
-                .roomCategoryId(roomCategoryId)
-                .build();
-        // Try to check the available rooms
-        try {
-            BasicResponse response = bookingService.checkAvailableRooms(request);
-            return ResponseEntity.ok(response);
-        }
-        // Catch any exception and return a bad request response
-        catch (BasicException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getResponse());
-        }
+            @RequestParam String roomType) {
+
+        return ResponseEntity.ok(
+                bookingService
+                        .checkAvailableRooms(BookingRequest.builder()
+                                .checkIn(checkIn)
+                                .checkOut(checkOut)
+                                .type(RoomType.valueOf(roomType))
+                                .build()));
     }
 }

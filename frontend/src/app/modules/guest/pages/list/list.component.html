@@ -50,8 +50,15 @@
             >
               View
             </button>
-            <button class="btn btn-active btn-accent">Edit</button>
-            <button class="btn btn-error">Delete</button>
+            <button
+              class="btn btn-active btn-accent"
+              (click)="formComponent.onInitUpdate(guest.id)"
+            >
+              Edit
+            </button>
+            <button class="btn btn-error" (click)="openDeleteModal(guest.id)">
+              Delete
+            </button>
           </div>
         </td>
       </tr>
@@ -69,5 +76,6 @@
   >
   </app-pagination>
 
-  <app-form> </app-form>
+  <app-form #formComponent> </app-form>
+  <app-delete-modal (deleteConfirmed)="onDeleteConfirmed()"></app-delete-modal>
 </div>

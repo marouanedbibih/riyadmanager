@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { NotificationComponent } from './notification/notification.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 
 
@@ -11,6 +12,7 @@ import { NotificationComponent } from './notification/notification.component';
     NavbarComponent,
     PaginationComponent,
     NotificationComponent,
+    DeleteModalComponent,
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { NotificationComponent } from './notification/notification.component';
   exports: [
     NavbarComponent,
     PaginationComponent,
-    NotificationComponent
+    NotificationComponent,
+    DeleteModalComponent
   ]
 })
 export class SharedModule { }

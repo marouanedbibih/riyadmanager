@@ -4,7 +4,7 @@
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <form (ngSubmit)="onSubmit()" class="">
+    <form [formGroup]="guestForm" (ngSubmit)="onSubmit()" class="">
 
       <div class="py-4 flex flex-col gap-2 p-4">
         <h3 class="text-lg font-bold">Add Guest</h3>
@@ -18,14 +18,12 @@
             type="text"
             placeholder="First Name"
             class="input input-bordered w-full"
-            [(ngModel)]="request.firstName"
-            name="firstName"
-            required
-            minlength="2"
-            maxlength="50"
+            formControlName="firstName"
           />
           <div class="label">
-            <span class="label-text-alt">First name must be between 2 and 50 characters</span>
+            <span class="label-text-alt" *ngIf="guestForm.get('firstName')?.invalid && guestForm.get('firstName')?.touched">
+              First name must be between 2 and 50 characters
+            </span>
           </div>
         </label>
 
@@ -38,14 +36,12 @@
             type="text"
             placeholder="Last Name"
             class="input input-bordered w-full"
-            [(ngModel)]="request.lastName"
-            name="lastName"
-            required
-            minlength="2"
-            maxlength="50"
+            formControlName="lastName"
           />
           <div class="label">
-            <span class="label-text-alt">Last name must be between 2 and 50 characters</span>
+            <span class="label-text-alt" *ngIf="guestForm.get('lastName')?.invalid && guestForm.get('lastName')?.touched">
+              Last name must be between 2 and 50 characters
+            </span>
           </div>
         </label>
 
@@ -58,14 +54,12 @@
             type="text"
             placeholder="Username"
             class="input input-bordered w-full"
-            [(ngModel)]="request.username"
-            name="username"
-            required
-            minlength="4"
-            maxlength="30"
+            formControlName="username"
           />
           <div class="label">
-            <span class="label-text-alt">Username must be between 4 and 30 characters</span>
+            <span class="label-text-alt" *ngIf="guestForm.get('username')?.invalid && guestForm.get('username')?.touched">
+              Username must be between 4 and 30 characters
+            </span>
           </div>
         </label>
 
@@ -78,13 +72,12 @@
             type="email"
             placeholder="Email"
             class="input input-bordered w-full"
-            [(ngModel)]="request.email"
-            name="email"
-            required
-            email
+            formControlName="email"
           />
           <div class="label">
-            <span class="label-text-alt">Invalid email format</span>
+            <span class="label-text-alt" *ngIf="guestForm.get('email')?.invalid && guestForm.get('email')?.touched">
+              Invalid email format
+            </span>
           </div>
         </label>
 
@@ -97,24 +90,23 @@
             type="text"
             placeholder="Phone"
             class="input input-bordered w-full"
-            [(ngModel)]="request.phone"
-            name="phone"
-            required
-            pattern="^\\+?[0-9]{10,15}$"
+            formControlName="phone"
           />
           <div class="label">
-            <span class="label-text-alt">Invalid phone number format</span>
+            <span class="label-text-alt" *ngIf="guestForm.get('phone')?.invalid && guestForm.get('phone')?.touched">
+              Invalid phone number format
+            </span>
           </div>
         </label>
 
         <!-- Submit Button -->
         <button
-        type="submit"
-        class="bg-blue-950 text-white p-2 rounded-md transition hover:bg-blue-950 flex items-center justify-center"
-      >
-        <span *ngIf="formLoading.button" class="loading loading-spinner mr-2"></span>
-        {{ formLoading.button ? 'Loading' : 'Submit' }}
-      </button>
+          type="submit"
+          class="bg-blue-950 text-white p-2 rounded-md transition hover:bg-blue-800 flex items-center justify-center"
+        >
+          <span *ngIf="formLoading.button" class="loading loading-spinner mr-2"></span>
+          {{ formLoading.button ? 'Loading' : 'Submit' }}
+        </button>
       </div>
     </form>
   </div>

@@ -1,4 +1,5 @@
 export interface IGuest {
+  id: number;
   lastName: string;
   firstName: string;
   username: string;

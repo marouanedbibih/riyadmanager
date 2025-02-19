@@ -6,7 +6,7 @@ import { GuestRoutingModule } from './guest-routing.module';
 import { MainComponent } from './pages/main/main.component';
 import { ListComponent } from './pages/list/list.component';
 import { FormComponent } from './components/form/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     GuestRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class GuestModule { }

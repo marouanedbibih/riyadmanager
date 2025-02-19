@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.marouanedbibih.riyadmanager.lib.interfaces.IRESTController;
 import com.marouanedbibih.riyadmanager.lib.models.PageRES;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -41,7 +42,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
     @Override
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-    public ResponseEntity<GuestDTO> create(@RequestBody GuestREQ req) {
+    public ResponseEntity<GuestDTO> create(@RequestBody @Valid GuestREQ req) {
         GuestDTO guestDTO = guestService.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(guestDTO);
     }
@@ -49,7 +50,7 @@ public class GuestREST implements IRESTController<GuestDTO, GuestREQ, GuestREQ, 
     @Override
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
-    public ResponseEntity<GuestDTO> update(@RequestBody GuestREQ req, @PathVariable Long id) {
+    public ResponseEntity<GuestDTO> update(@RequestBody @Valid GuestREQ req, @PathVariable Long id) {
         GuestDTO guestDTO = guestService.update(id, req);
         return ResponseEntity.ok(guestDTO);
     }

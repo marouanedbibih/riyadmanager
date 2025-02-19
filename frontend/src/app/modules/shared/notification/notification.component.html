@@ -1,7 +1,12 @@
 <div
   *ngIf="notification"
-  [ngClass]="'alert alert-' + notification.type"
-  class="notification fixed bottom-0 right-4 m-4 p-4 z-50 w-1/5 transition-transform duration-500 ease-in-out "
+  [ngClass]="{
+    'alert': true,
+    'alert-success': notification.type === 'success',
+    'alert-warning': notification.type === 'warning',
+    'alert-error': notification.type === 'error'
+  }"
+  class="notification fixed bottom-0 right-4 m-4 p-4 z-50 w-1/5 transition-transform duration-500 ease-in-out"
   role="alert">
   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
     <path

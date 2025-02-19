@@ -28,8 +28,5 @@ export class NotificationService {
     this.notificationSubject.next(null);
   }
 
-  // Static message for testing
-  showTestNotification(): void {
-    this.showNotification('success', 'This is a test notification');
-  }
+  
 }

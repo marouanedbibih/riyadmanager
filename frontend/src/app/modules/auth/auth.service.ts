@@ -61,4 +61,13 @@ export class AuthService {
     }
     return null;
   }
+
+  hasRole(role: string): boolean {
+    const user = this.getUserFromToken();
+    return user ? user.role === role : false;
+  }
+
+  isAuthenticated(): boolean {
+    return !this.isTokenExpired();
+  }
 }

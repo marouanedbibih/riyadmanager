@@ -6,10 +6,16 @@ import { RegisterComponent } from './modules/auth/pages/register/register.compon
 import { HomeComponent } from './modules/landing/pages/home/home.component';
 import { AboutComponent } from './modules/landing/pages/about/about.component';
 import { ReservationComponent } from './modules/landing/pages/reservation/reservation.component';
+import { NoAuthGuard } from './guard/no-auth.guard';
+import { RoleGuard } from './guard/role.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [NoAuthGuard],
+  },
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'reservation', component: ReservationComponent },
@@ -17,6 +23,8 @@ const routes: Routes = [
     path: 'guests',
     loadChildren: () =>
       import('./modules/guest/guest.module').then((m) => m.GuestModule),
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'MANAGER'] },
   },
 ];
 

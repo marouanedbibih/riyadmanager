@@ -34,8 +34,8 @@ public class BookingService {
          *                           range.
          */
         public List<RoomDTO> checkAvailableRooms(BookingRequest request) {
-                return roomRepository.findByRoomType(request.getType()).stream()
-                                .filter(room -> reservationRepository
+                return roomRepository.findByType(request.getType()).stream()
+                                .filter(room -> !reservationRepository
                                                 .existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
                                                                 room.getId(),
                                                                 request.getCheckInLocalDate(),
@@ -51,7 +51,7 @@ public class BookingService {
                                                 list -> {
                                                         if (list.isEmpty()) {
                                                                 throw new BusinessException("No rooms available",
-                                                                                HttpStatus.BAD_REQUEST);
+                                                                                HttpStatus.NOT_FOUND);
                                                         }
                                                         return list;
                                                 }));

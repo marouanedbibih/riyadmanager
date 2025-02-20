@@ -6,6 +6,7 @@ import { LandingNavbarComponent } from './components/landing-navbar/landing-navb
 import { HeroComponent } from './components/hero/hero.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { BookingComponent } from './components/booking/booking.component';
     BookingComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [
     HomeComponent,

@@ -56,16 +56,16 @@ public class BookingServiceTest {
         room.setStatus(RoomStatus.AVAILABLE);
         room.setType(RoomType.SINGLE);
 
-        when(roomRepository.findByRoomType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
+        when(roomRepository.findByType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
         when(reservationRepository.existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
-                1L, LocalDate.of(2024, 9, 9), LocalDate.of(2024, 9, 13))).thenReturn(false);
+                1L, LocalDate.of(2024, 9, 9), LocalDate.of(2024, 9, 13))).thenReturn(true);
 
         BusinessException exception = assertThrows(BusinessException.class, () -> {
             bookingService.checkAvailableRooms(request);
         });
 
         assertEquals("No rooms available", exception.getMessage());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
@@ -81,16 +81,16 @@ public class BookingServiceTest {
         room.setStatus(RoomStatus.AVAILABLE);
         room.setType(RoomType.SINGLE);
 
-        when(roomRepository.findByRoomType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
+        when(roomRepository.findByType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
         when(reservationRepository.existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
-                1L, LocalDate.of(2024, 9, 12), LocalDate.of(2024, 9, 16))).thenReturn(false);
+                1L, LocalDate.of(2024, 9, 12), LocalDate.of(2024, 9, 16))).thenReturn(true);
 
         BusinessException exception = assertThrows(BusinessException.class, () -> {
             bookingService.checkAvailableRooms(request);
         });
 
         assertEquals("No rooms available", exception.getMessage());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
@@ -107,9 +107,9 @@ public class BookingServiceTest {
         room.setStatus(RoomStatus.AVAILABLE);
         room.setType(RoomType.SINGLE);
 
-        when(roomRepository.findByRoomType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
+        when(roomRepository.findByType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
         when(reservationRepository.existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
-                1L, LocalDate.of(2024, 9, 11), LocalDate.of(2024, 9, 14))).thenReturn(true);
+                1L, LocalDate.of(2024, 9, 11), LocalDate.of(2024, 9, 14))).thenReturn(false);
 
         List<RoomDTO> availableRooms = bookingService.checkAvailableRooms(request);
 
@@ -130,9 +130,9 @@ public class BookingServiceTest {
         room.setStatus(RoomStatus.AVAILABLE);
         room.setType(RoomType.SINGLE);
 
-        when(roomRepository.findByRoomType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
+        when(roomRepository.findByType(RoomType.SINGLE)).thenReturn(Arrays.asList(room));
         when(reservationRepository.existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(
-                1L, LocalDate.of(2024, 9, 21), LocalDate.of(2024, 9, 24))).thenReturn(true);
+                1L, LocalDate.of(2024, 9, 21), LocalDate.of(2024, 9, 24))).thenReturn(false);
 
         List<RoomDTO> availableRooms = bookingService.checkAvailableRooms(request);
 

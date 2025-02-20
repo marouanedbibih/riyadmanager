@@ -32,7 +32,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final static String[] PUBLIC_ENDPOINTS = {
         "/api/register",
-        "/api/login"
+        "/api/login",
+        "/api/booking/available-rooms/"
     };
 
     @Override

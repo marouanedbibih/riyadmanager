@@ -1,9 +1,9 @@
-<form action="" class="h-1/2 min-h-64 flex flex-row justify-center items-center gap-8">
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="h-1/2 min-h-64 flex flex-row justify-center items-center gap-8">
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">What is your start date for the reservation?</span>
     </div>
-    <input type="date" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+    <input type="date" formControlName="checkIn" class="input input-bordered w-full max-w-xs" />
     <div class="label">
       <span class="label-text-alt">Choose today's date or pick another</span>
     </div>
@@ -13,7 +13,7 @@
     <div class="label">
       <span class="label-text">What is your end date for the reservation?</span>
     </div>
-    <input type="date" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+    <input type="date" formControlName="checkOut" class="input input-bordered w-full max-w-xs" />
     <div class="label">
       <span class="label-text-alt">Choose today's date or pick another</span>
     </div>
@@ -23,20 +23,24 @@
     <div class="label">
       <span class="label-text">Select Room Type</span>
     </div>
-    <select class="select select-bordered">
+    <select formControlName="type" class="select select-bordered">
       <option disabled selected>Pick a room type</option>
-      <option>SINGLE</option>
-      <option>DOUBLE</option>
-      <option>SUITE</option>
-      <option>TWIN</option>
-      <option>DELUXE</option>
-      <option>FAMILY</option>
-      <option>PRESIDENTIAL</option>
+      <option *ngFor="let type of roomTypes" [value]="type">{{ type }}</option>
     </select>
     <div class="label">
       <span class="label-text-alt">Choose the type of room you prefer</span>
     </div>
   </label>
 
-  <button class="btn bg-blue-900 text-white hover:bg-blue-800 active:bg-blue-950 hover:scale-110">Book Now</button>
+  <button type="submit" class="btn bg-blue-900 text-white hover:bg-blue-800 active:bg-blue-950 hover:scale-110">Book Now</button>
 </form>
+<dialog #modal class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Notification</h3>
+    <p class="py-4">{{ modalMessage }}</p>
+    <div class="modal-action">
+      <button class="btn btn-error" (click)="closeModal()" >Close</button>
+      <button class="btn btn-success" (click)="closeModal()" *ngIf="showReservationButton">Reserve Now</button>
+    </div>
+  </div>
+</dialog>

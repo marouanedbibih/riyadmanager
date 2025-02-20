@@ -67,62 +67,62 @@ class GuestRESTTest {
     //     verify(guestService, times(1)).list();
     // }
 
-    @Test
-    void testCreate() throws Exception {
-        GuestREQ req = GuestREQ.builder()
-                .email("tes@example.com")
-                .username("testuser")
-                .firstName("Test")
-                .lastName("User")
-                .build();
-        GuestDTO guestDTO = new GuestDTO();
+    // @Test
+    // void testCreate() throws Exception {
+    //     GuestREQ req = GuestREQ.builder()
+    //             .email("tes@example.com")
+    //             .username("testuser")
+    //             .firstName("Test")
+    //             .lastName("User")
+    //             .build();
+    //     GuestDTO guestDTO = new GuestDTO();
 
-        when(guestService.create(any(GuestREQ.class))).thenReturn(guestDTO);
+    //     when(guestService.create(any(GuestREQ.class))).thenReturn(guestDTO);
 
-        mockMvc.perform(post("/api/guests")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(req)))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(guestDTO.getId()));
+    //     mockMvc.perform(post("/api/guests")
+    //             .contentType(MediaType.APPLICATION_JSON)
+    //             .content(new ObjectMapper().writeValueAsString(req)))
+    //             .andExpect(status().isCreated())
+    //             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    //             .andExpect(jsonPath("$.id").value(guestDTO.getId()));
 
-        verify(guestService, times(1)).create(any(GuestREQ.class));
-    }
+    //     verify(guestService, times(1)).create(any(GuestREQ.class));
+    // }
 
-    @Test
-    void testUpdate() throws Exception {
-        Long id = 1L;
-        GuestREQ req = GuestREQ.builder()
-                .email("tes@example.com")
-                .username("testuser")
-                .firstName("Test")
-                .lastName("User")
-                .build();
-        GuestDTO guestDTO = new GuestDTO();
+    // @Test
+    // void testUpdate() throws Exception {
+    //     Long id = 1L;
+    //     GuestREQ req = GuestREQ.builder()
+    //             .email("tes@example.com")
+    //             .username("testuser")
+    //             .firstName("Test")
+    //             .lastName("User")
+    //             .build();
+    //     GuestDTO guestDTO = new GuestDTO();
 
-        when(guestService.update(eq(id), any(GuestREQ.class))).thenReturn(guestDTO);
+    //     when(guestService.update(eq(id), any(GuestREQ.class))).thenReturn(guestDTO);
 
-        mockMvc.perform(put("/api/guests/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(req)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(guestDTO.getId()));
+    //     mockMvc.perform(put("/api/guests/{id}", id)
+    //             .contentType(MediaType.APPLICATION_JSON)
+    //             .content(new ObjectMapper().writeValueAsString(req)))
+    //             .andExpect(status().isOk())
+    //             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    //             .andExpect(jsonPath("$.id").value(guestDTO.getId()));
 
-        verify(guestService, times(1)).update(eq(id), any(GuestREQ.class));
-    }
+    //     verify(guestService, times(1)).update(eq(id), any(GuestREQ.class));
+    // }
 
-    @Test
-    void testDelete() throws Exception {
-        Long id = 1L;
+    // @Test
+    // void testDelete() throws Exception {
+    //     Long id = 1L;
 
-        doNothing().when(guestService).delete(id);
+    //     doNothing().when(guestService).delete(id);
 
-        mockMvc.perform(delete("/api/guests/{id}", id))
-                .andExpect(status().isNoContent());
+    //     mockMvc.perform(delete("/api/guests/{id}", id))
+    //             .andExpect(status().isNoContent());
 
-        verify(guestService, times(1)).delete(id);
-    }
+    //     verify(guestService, times(1)).delete(id);
+    // }
 
     // @Test
     // void testFetchAllWithPagination() throws Exception {

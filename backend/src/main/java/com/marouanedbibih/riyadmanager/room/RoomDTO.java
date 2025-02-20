@@ -19,5 +19,5 @@ public class RoomDTO {
     private LocalDateTime updatedAt;
     private Integer number;
     private RoomStatus status;
-    private String roomCategoryTitle;
+    private RoomType roomType;
 }

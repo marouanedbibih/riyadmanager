@@ -1,15 +1,15 @@
 package com.marouanedbibih.riyadmanager.booking;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marouanedbibih.riyadmanager.reservation.ReservationService;
 import com.marouanedbibih.riyadmanager.room.RoomDTO;
 import com.marouanedbibih.riyadmanager.room.RoomType;
 
@@ -20,21 +20,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookingController {
 
-    @Autowired
-    private BookingService bookingService;
+        private final BookingService bookingService;
+        private final ReservationService reservationService;
 
-    @GetMapping("/available-rooms/")
-    public ResponseEntity<List<RoomDTO>> getAvailableRooms(
-            @RequestParam Date checkIn,
-            @RequestParam Date checkOut,
-            @RequestParam String roomType) {
+        @GetMapping("/available-rooms/")
+        public ResponseEntity<Map<String,Object>> getAvailableRooms(
+                        @RequestParam Date checkIn,
+                        @RequestParam Date checkOut,
+                        @RequestParam String roomType) {
 
-        return ResponseEntity.ok(
-                bookingService
-                        .checkAvailableRooms(BookingRequest.builder()
-                                .checkIn(checkIn)
-                                .checkOut(checkOut)
-                                .type(RoomType.valueOf(roomType))
-                                .build()));
-    }
+                RoomDTO room = bookingService
+                                .checkAvailableRooms(BookingRequest.builder()
+                                                .checkIn(checkIn)
+                                                .checkOut(checkOut)
+                                                .type(RoomType.valueOf(roomType))
+                                                .build()).get(0);
+                
+                
+                double amount =  reservationService.calculateReservationAmount(room.getRoomType(), checkIn.toLocalDate(), checkOut.toLocalDate());
+
+                return ResponseEntity.ok(Map.of("room", room, "amount", amount, "checkIn", checkIn, "checkOut", checkOut));
+
+        }
 }

@@ -44,7 +44,7 @@ public class BookingService {
                                                 .id(room.getId())
                                                 .number(room.getNumber())
                                                 .status(room.getStatus())
-                                                .roomCategoryTitle(room.getType().toString())
+                                                .roomType(room.getType())
                                                 .build())
                                 .collect(Collectors.collectingAndThen(
                                                 Collectors.toList(),

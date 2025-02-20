@@ -40,7 +40,7 @@
     <p class="py-4">{{ modalMessage }}</p>
     <div class="modal-action">
       <button class="btn btn-error" (click)="closeModal()" >Close</button>
-      <button class="btn btn-success" (click)="closeModal()" *ngIf="showReservationButton">Reserve Now</button>
+      <button class="btn btn-success" (click)="goToReservation()" *ngIf="showReservationButton">Reserve Now</button>
     </div>
   </div>
 </dialog>

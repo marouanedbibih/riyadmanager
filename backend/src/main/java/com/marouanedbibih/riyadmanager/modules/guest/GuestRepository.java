@@ -18,4 +18,6 @@ public interface GuestRepository extends JpaRepository<Guest, Long> {
     @Query("SELECT g FROM Guest g WHERE g.lastName LIKE %:search% OR g.firstName LIKE %:search% OR g.username LIKE %:search% OR g.email LIKE %:search%")
     Page<Guest> searchGuest(@Param("search") String search, Pageable pageable);
 
+    boolean existsByEmail(String email);
+
 }

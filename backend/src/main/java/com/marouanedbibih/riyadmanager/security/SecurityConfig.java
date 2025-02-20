@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/booking/available-rooms/").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/reservations/guest").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 // Guests management endpoints - accessible only by ADMIN & MANAGER

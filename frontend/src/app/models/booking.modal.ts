@@ -6,11 +6,18 @@ export interface IBookingRequest {
 
 export interface IBookingRoom {
   id: number;
-  createdAt: String;
-  updatedAt: String;
+  createdAt: string;
+  updatedAt: string;
   number: number;
   status: RoomStatus;
-  roomCategoryTitle: string;
+  roomType: string;
+}
+
+export interface IBookingResponse {
+  room: IBookingRoom;
+  amount: number;
+  checkIn: string;
+  checkOut: string;
 }
 
 export enum RoomType {

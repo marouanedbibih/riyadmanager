@@ -7,8 +7,7 @@ import { HeroComponent } from './components/hero/hero.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { ReservationComponent } from './pages/reservation/reservation.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +17,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeroComponent,
     FooterComponent,
     BookingComponent,
+    ReservationComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   exports: [
     HomeComponent,
     AboutComponent,
@@ -30,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeroComponent,
     FooterComponent,
     BookingComponent,
-  ]
+    ReservationComponent
+  ],
 })
-export class LandingModule { }
+export class LandingModule {}

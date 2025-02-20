@@ -1,0 +1,94 @@
+<div class="min-h-screen flex flex-col">
+  <app-landing-navbar></app-landing-navbar>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 py-24 w-full px-8">
+    <!-- Booking Form (Right Side) -->
+    <div class="flex flex-col items-center justify-center">
+      <form
+        [formGroup]="bookingForm"
+        (ngSubmit)="onSubmit()"
+        class="w-full max-w-md bg-white shadow-lg rounded-md p-8 space-y-6"
+      >
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Last Name</span>
+          </div>
+          <input
+            type="text"
+            formControlName="lastName"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+        </label>
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">First Name</span>
+          </div>
+          <input
+            type="text"
+            formControlName="firstName"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+        </label>
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Email</span>
+          </div>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+        </label>
+
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Phone Number</span>
+          </div>
+          <input
+            type="text"
+            formControlName="phoneNumber"
+            placeholder="Type here"
+            class="input input-bordered w-full"
+          />
+        </label>
+
+        <button
+          type="submit"
+          class="btn bg-blue-900 text-white hover:bg-blue-800 active:bg-blue-950 hover:scale-105 w-full"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <!-- Reservation Details (Left Side) -->
+    <div class="flex flex-col items-center justify-center">
+      <div class="card bg-base-100 w-full max-w-md shadow-xl p-6">
+        <div class="card-body" *ngIf="bookingData">
+          <h2 class="card-title">Reservation Details</h2>
+          <p><strong>Room Number:</strong> {{ bookingData.room.number }}</p>
+          <p><strong>Room Type:</strong> {{ bookingData.room.roomType }}</p>
+          <p><strong>Check-In:</strong> {{ bookingData.checkIn }}</p>
+          <p><strong>Check-Out:</strong> {{ bookingData.checkOut }}</p>
+          <p><strong>Amount:</strong> ${{ bookingData.amount }}</p>
+        </div>
+        <div class="card-body text-center" *ngIf="!bookingData">
+          <h2 class="card-title">No Reservation Data</h2>
+          <p>Please go back and select a room.</p>
+          <div class="card-actions justify-center">
+            <a class="btn btn-primary"  href="/">
+              Back to Booking
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

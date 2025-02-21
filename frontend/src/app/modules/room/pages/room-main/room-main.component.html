@@ -1,0 +1,4 @@
+<div class="grid grid-cols-2 gap-4 py-8">
+  <app-room-list (editRoom)="onEditRoom($event)"></app-room-list>
+  <app-room-form [roomToEdit]="roomToEdit" (roomCreated)="onFetchRooms()"></app-room-form>
+</div>

@@ -26,6 +26,13 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['ADMIN', 'MANAGER'] },
   },
+  {
+    path: 'room',
+    loadChildren: () =>
+      import('./modules/room/room.module').then((m) => m.RoomModule),
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'MANAGER'] },
+  },
 ];
 
 @NgModule({

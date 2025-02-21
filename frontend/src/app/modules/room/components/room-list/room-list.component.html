@@ -1,0 +1,44 @@
+<div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative mt-4">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>Numero</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let room of rooms">
+        <th>{{ room.number }}</th>
+        <td>{{ room.roomType }}</td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': room.status === 'AVAILABLE',
+              'badge-warning': room.status === 'RESERVED',
+              'badge-error': room.status === 'OCCUPIED'
+            }"
+          >
+            {{ room.status }}
+          </span>
+        </td>
+        <td>
+          <div class="flex items-center space-x-4">
+            <button
+              class="btn btn-xs btn-active btn-success"
+              (click)="onEditRoom(room)"
+            >
+              Edit
+            </button>
+            <button class="btn btn-xs btn-error" (click)="onDeleteRoom(room.id)">
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

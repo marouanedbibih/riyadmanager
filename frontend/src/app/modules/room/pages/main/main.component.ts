@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { RoomListComponent } from '../../../room/components/room-list/room-list.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-main',

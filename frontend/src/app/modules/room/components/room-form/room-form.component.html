@@ -1,0 +1,65 @@
+<div class="container mx-auto">
+  <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="bg-white rounded-lg shadow p-4">
+
+    <div class="py-4 flex flex-col gap-2">
+      <h3 class="text-lg font-bold">Add Room</h3>
+
+      <!-- Room Number Input -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Room Number</span>
+        </div>
+        <input
+          type="number"
+          placeholder="Room Number"
+          class="input input-bordered w-full"
+          formControlName="number"
+        />
+        <div class="label">
+          <span class="label-text-alt" *ngIf="roomForm.get('number')?.invalid && roomForm.get('number')?.touched">
+            Room number is required
+          </span>
+        </div>
+      </label>
+
+      <!-- Room Type Select -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Room Type</span>
+        </div>
+        <select class="select select-bordered w-full" formControlName="roomType">
+          <option *ngFor="let type of roomTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div class="label">
+          <span class="label-text-alt" *ngIf="roomForm.get('roomType')?.invalid && roomForm.get('roomType')?.touched">
+            Room type is required
+          </span>
+        </div>
+      </label>
+
+      <!-- Room Status Select -->
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Room Status</span>
+        </div>
+        <select class="select select-bordered w-full" formControlName="status">
+          <option *ngFor="let status of roomStatuses" [value]="status">{{ status }}</option>
+        </select>
+        <div class="label">
+          <span class="label-text-alt" *ngIf="roomForm.get('status')?.invalid && roomForm.get('status')?.touched">
+            Room status is required
+          </span>
+        </div>
+      </label>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="bg-blue-950 text-white p-2 rounded-md transition hover:bg-blue-800 flex items-center justify-center"
+      >
+        <span *ngIf="formLoading.button" class="loading loading-spinner mr-2"></span>
+        {{ formLoading.button ? 'Loading' : 'Submit' }}
+      </button>
+    </div>
+  </form>
+</div>

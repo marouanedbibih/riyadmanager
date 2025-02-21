@@ -111,7 +111,7 @@ public class RoomService implements
         }
     }
 
-    public List<RoomDTO> checkAvailableRooms(BookingRequest request) {
+    public List<RoomDTO> checkAvailableRoomsByType(BookingRequest request) {
         return roomRepository.findByType(request.getType()).stream()
                 .filter(room -> !reservationRepository
                         .existsByRoomIdAndCheckInLessThanEqualAndCheckOutGreaterThanEqual(

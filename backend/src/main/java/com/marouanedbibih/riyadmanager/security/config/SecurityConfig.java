@@ -59,6 +59,14 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/api/guests/{id}").hasAnyAuthority(ADMIN,MANAGER)
                 .requestMatchers(HttpMethod.GET, "/api/guests/list").hasAnyAuthority(ADMIN,MANAGER)
 
+                // Rooms management endpoints - accessible only by ADMIN & MANAGER
+                .requestMatchers(HttpMethod.POST, "/api/rooms").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.PUT, "/api/rooms/{id}").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.GET, "/api/rooms/list").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.DELETE, "/api/rooms/{id}").hasAnyAuthority(ADMIN, MANAGER)
+                .requestMatchers(HttpMethod.GET, "/api/rooms/available").hasAnyAuthority(ADMIN, MANAGER)
+
                 .anyRequest().authenticated());
 
         http.sessionManagement(

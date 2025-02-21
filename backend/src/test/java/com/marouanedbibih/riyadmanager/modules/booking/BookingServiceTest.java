@@ -17,15 +17,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
-import com.marouanedbibih.riyadmanager.booking.BookingRequest;
-import com.marouanedbibih.riyadmanager.booking.BookingService;
-import com.marouanedbibih.riyadmanager.errors.BusinessException;
-import com.marouanedbibih.riyadmanager.reservation.ReservationRepository;
-import com.marouanedbibih.riyadmanager.room.Room;
-import com.marouanedbibih.riyadmanager.room.RoomDTO;
-import com.marouanedbibih.riyadmanager.room.RoomRepository;
-import com.marouanedbibih.riyadmanager.room.RoomStatus;
-import com.marouanedbibih.riyadmanager.room.RoomType;
+import com.marouanedbibih.riyadmanager.errors.exception.BusinessException;
+import com.marouanedbibih.riyadmanager.modules.booking.BookingRequest;
+import com.marouanedbibih.riyadmanager.modules.booking.BookingService;
+import com.marouanedbibih.riyadmanager.modules.reservation.ReservationRepository;
+import com.marouanedbibih.riyadmanager.modules.room.Room;
+import com.marouanedbibih.riyadmanager.modules.room.RoomDTO;
+import com.marouanedbibih.riyadmanager.modules.room.RoomRepository;
+import com.marouanedbibih.riyadmanager.modules.room.RoomStatus;
+import com.marouanedbibih.riyadmanager.modules.room.RoomType;
 
 public class BookingServiceTest {
 

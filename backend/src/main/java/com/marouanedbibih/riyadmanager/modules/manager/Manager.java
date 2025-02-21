@@ -1,6 +1,6 @@
 package com.marouanedbibih.riyadmanager.modules.manager;
 
-import com.marouanedbibih.riyadmanager.modules.user.User;
+import com.marouanedbibih.riyadmanager.security.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

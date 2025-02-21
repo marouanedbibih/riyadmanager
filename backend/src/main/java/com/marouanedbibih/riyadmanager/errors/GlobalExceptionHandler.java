@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.marouanedbibih.riyadmanager.errors.exception.BusinessException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

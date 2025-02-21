@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
-import com.marouanedbibih.riyadmanager.errors.BusinessException;
+import com.marouanedbibih.riyadmanager.errors.exception.BusinessException;
 import com.marouanedbibih.riyadmanager.lib.interfaces.ICRUD;
 import com.marouanedbibih.riyadmanager.lib.interfaces.IFetch;
 import com.marouanedbibih.riyadmanager.lib.models.PageRES;

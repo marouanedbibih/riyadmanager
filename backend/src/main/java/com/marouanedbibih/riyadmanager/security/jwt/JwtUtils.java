@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.marouanedbibih.riyadmanager.modules.user.UserDTO;
+import com.marouanedbibih.riyadmanager.security.user.UserDTO;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

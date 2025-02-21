@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.marouanedbibih.riyadmanager.modules.user.UserRepository;
+import com.marouanedbibih.riyadmanager.security.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

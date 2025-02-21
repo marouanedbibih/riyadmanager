@@ -12,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.javafaker.Faker;
 import com.marouanedbibih.riyadmanager.modules.guest.Guest;
 import com.marouanedbibih.riyadmanager.modules.manager.Manager;
-import com.marouanedbibih.riyadmanager.modules.user.User;
-import com.marouanedbibih.riyadmanager.modules.user.UserRepository;
-import com.marouanedbibih.riyadmanager.modules.user.UserRole;
-import com.marouanedbibih.riyadmanager.reservation.Reservation;
-import com.marouanedbibih.riyadmanager.reservation.ReservationRepository;
-import com.marouanedbibih.riyadmanager.room.Room;
-import com.marouanedbibih.riyadmanager.room.RoomRepository;
-import com.marouanedbibih.riyadmanager.room.RoomStatus;
-import com.marouanedbibih.riyadmanager.room.RoomType;
+import com.marouanedbibih.riyadmanager.modules.reservation.Reservation;
+import com.marouanedbibih.riyadmanager.modules.reservation.ReservationRepository;
+import com.marouanedbibih.riyadmanager.modules.room.Room;
+import com.marouanedbibih.riyadmanager.modules.room.RoomRepository;
+import com.marouanedbibih.riyadmanager.modules.room.RoomStatus;
+import com.marouanedbibih.riyadmanager.modules.room.RoomType;
+import com.marouanedbibih.riyadmanager.security.user.User;
+import com.marouanedbibih.riyadmanager.security.user.UserRepository;
+import com.marouanedbibih.riyadmanager.security.user.UserRole;
 
 import lombok.RequiredArgsConstructor;
 

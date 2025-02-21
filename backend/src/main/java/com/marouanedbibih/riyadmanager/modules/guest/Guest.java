@@ -2,8 +2,8 @@ package com.marouanedbibih.riyadmanager.modules.guest;
 
 import java.util.Set;
 
-import com.marouanedbibih.riyadmanager.modules.user.User;
-import com.marouanedbibih.riyadmanager.reservation.Reservation;
+import com.marouanedbibih.riyadmanager.modules.reservation.Reservation;
+import com.marouanedbibih.riyadmanager.security.user.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

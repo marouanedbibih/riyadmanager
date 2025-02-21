@@ -16,14 +16,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.marouanedbibih.riyadmanager.errors.BusinessException;
+import com.marouanedbibih.riyadmanager.errors.exception.BusinessException;
 import com.marouanedbibih.riyadmanager.modules.guest.Guest;
 import com.marouanedbibih.riyadmanager.modules.guest.GuestRepository;
-import com.marouanedbibih.riyadmanager.reservation.GuestReservationRequest;
-import com.marouanedbibih.riyadmanager.reservation.ReservationRepository;
-import com.marouanedbibih.riyadmanager.reservation.ReservationService;
-import com.marouanedbibih.riyadmanager.room.RoomRepository;
-import com.marouanedbibih.riyadmanager.room.RoomType;
+import com.marouanedbibih.riyadmanager.modules.reservation.GuestReservationRequest;
+import com.marouanedbibih.riyadmanager.modules.reservation.ReservationRepository;
+import com.marouanedbibih.riyadmanager.modules.reservation.ReservationService;
+import com.marouanedbibih.riyadmanager.modules.room.RoomRepository;
+import com.marouanedbibih.riyadmanager.modules.room.RoomType;
 
 public class ReservationServiceTest {
 

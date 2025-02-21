@@ -18,7 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
-import com.marouanedbibih.riyadmanager.errors.BusinessException;
+import com.marouanedbibih.riyadmanager.errors.exception.BusinessException;
 import com.marouanedbibih.riyadmanager.lib.models.PageRES;
 
 class GuestServiceTest {

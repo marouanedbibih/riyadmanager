@@ -19,9 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.marouanedbibih.riyadmanager.errors.exception.BusinessException;
 import com.marouanedbibih.riyadmanager.modules.guest.Guest;
 import com.marouanedbibih.riyadmanager.modules.guest.GuestRepository;
-import com.marouanedbibih.riyadmanager.modules.reservation.GuestReservationRequest;
 import com.marouanedbibih.riyadmanager.modules.reservation.ReservationRepository;
 import com.marouanedbibih.riyadmanager.modules.reservation.ReservationService;
+import com.marouanedbibih.riyadmanager.modules.reservation.dto.GuestReservationRequest;
 import com.marouanedbibih.riyadmanager.modules.room.RoomRepository;
 import com.marouanedbibih.riyadmanager.modules.room.RoomType;
 

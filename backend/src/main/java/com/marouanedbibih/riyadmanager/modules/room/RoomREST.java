@@ -20,42 +20,42 @@ public class RoomREST {
 
     private final RoomService roomService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @PostMapping
     public ResponseEntity<RoomDTO> createRoom(@RequestBody RoomRequest roomRequest) {
         RoomDTO roomDTO = roomService.create(roomRequest);
         return new ResponseEntity<>(roomDTO, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<RoomDTO> updateRoom(@PathVariable Long id, @RequestBody RoomRequest roomRequest) {
         RoomDTO roomDTO = roomService.update(id, roomRequest);
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         roomService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @GetMapping("/{id}")
     public ResponseEntity<RoomDTO> getRoom(@PathVariable Long id) {
         RoomDTO roomDTO = roomService.get(id);
         return new ResponseEntity<>(roomDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @GetMapping("/list")
     public ResponseEntity<List<RoomDTO>> listRooms() {
         List<RoomDTO> rooms = roomService.list();
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     @GetMapping("/available")
     public ResponseEntity<List<RoomDTO>> listAvailableRooms(
             @RequestParam String startDate,

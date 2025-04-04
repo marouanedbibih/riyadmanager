@@ -1,4 +1,4 @@
-package com.marouanedbibih.riyadmanager.modules.reservation;
+package com.marouanedbibih.riyadmanager.modules.reservation.dto;
 
 import lombok.Builder;
 

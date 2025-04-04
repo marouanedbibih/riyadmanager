@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.javafaker.Faker;
 import com.marouanedbibih.riyadmanager.modules.guest.Guest;
+import com.marouanedbibih.riyadmanager.modules.guest.GuestRapository;
 import com.marouanedbibih.riyadmanager.modules.manager.Manager;
 import com.marouanedbibih.riyadmanager.modules.reservation.Reservation;
 import com.marouanedbibih.riyadmanager.modules.reservation.ReservationRepository;
+import com.marouanedbibih.riyadmanager.modules.reservation.ReservationStatus;
 import com.marouanedbibih.riyadmanager.modules.room.Room;
 import com.marouanedbibih.riyadmanager.modules.room.RoomRepository;
 import com.marouanedbibih.riyadmanager.modules.room.RoomStatus;
@@ -34,6 +36,7 @@ public class DatabaseInit implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
     private final ReservationRepository reservationRepository;
+    private final GuestRapository guestRapository;
 
     private final Faker faker = new Faker();
 
@@ -102,34 +105,33 @@ public class DatabaseInit implements CommandLineRunner {
     }
 
     @Transactional
-    private void initReservations() {
+    protected void initReservations() {
         List<Reservation> reservations = Arrays.asList(
-                Reservation.builder()
-                        .id(1L)
-                        .room(roomRepository.findById(1L).get())
-                        .checkIn(LocalDate.of(2025, 2, 9))
-                        .checkOut(LocalDate.of(2025, 2, 13))
-                        .build(),
-                Reservation.builder()
-                        .id(2L)
-                        .room(roomRepository.findById(2L).get())
-                        .checkIn(LocalDate.of(2025, 2, 12))
-                        .checkOut(LocalDate.of(2025, 2, 16))
-                        .build(),
-                Reservation.builder()
-                        .id(3L)
-                        .room(roomRepository.findById(3L).get())
-                        .checkIn(LocalDate.of(2025, 2, 11))
-                        .checkOut(LocalDate.of(2025, 2, 14))
-                        .build(),
-                Reservation.builder()
-                        .id(4L)
-                        .room(roomRepository.findById(4L).get())
-                        .checkIn(LocalDate.of(2025, 2, 21))
-                        .checkOut(LocalDate.of(2025, 2, 24))
-                        .build()
-        );
+                createReservation(1L, 1L, 1L, LocalDate.of(2025, 2, 9), LocalDate.of(2025, 2, 13)),
+                createReservation(2L, 2L, 2L, LocalDate.of(2025, 2, 12), LocalDate.of(2025, 2, 16)),
+                createReservation(3L, 3L, 3L, LocalDate.of(2025, 2, 11), LocalDate.of(2025, 2, 14)),
+                createReservation(4L, 4L, 4L, LocalDate.of(2025, 2, 21), LocalDate.of(2025, 2, 24)));
         reservationRepository.saveAll(reservations);
+    }
+
+    /**
+     * Helper method to create a reservation safely.
+     */
+    private Reservation createReservation(Long reservationId, Long roomId, Long guestId, LocalDate checkIn,
+            LocalDate checkOut) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Room not found with ID: " + roomId));
+
+        Guest guest = guestRepository.findById(guestId)
+                .orElseThrow(() -> new IllegalArgumentException("Guest not found with ID: " + guestId));
+
+        return Reservation.builder()
+                .id(reservationId)
+                .room(room)
+                .guest(guest)
+                .checkIn(checkIn)
+                .checkOut(checkOut)
+                .build();
     }
 
 }

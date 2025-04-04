@@ -16,4 +16,15 @@ services:
       - mysql
     networks:
       - riyadmanager-network
+
+  # frontend:
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: Dockerfile
+  #   container_name: riyadmanager-frontend
+  #   restart: always
+  #   ports:
+  #     - "4200:4200"
+  #   networks:
+  #     - riyadmanager-network
     
